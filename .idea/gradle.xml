@@ -15,6 +15,16 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/currency-exchange-service" />
+        <option name="gradleHome" value="$USER_HOME$/dev/gradle-4.10.3" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/currency-exchange-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/limits-service" />
         <option name="gradleHome" value="$USER_HOME$/dev/gradle-4.10.3" />
         <option name="modules">
