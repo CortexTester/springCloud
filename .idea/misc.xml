@@ -3,8 +3,10 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/config-server" />
+    <file type="web" url="file://$PROJECT_DIR$/currency-conversion-service" />
     <file type="web" url="file://$PROJECT_DIR$/currency-exchange-service" />
     <file type="web" url="file://$PROJECT_DIR$/limits-service" />
+    <file type="web" url="file://$PROJECT_DIR$/service-registry" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
