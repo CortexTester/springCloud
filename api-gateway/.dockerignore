@@ -1,0 +1,16 @@
+# Repository
+.git
+.gitignore
+.gitlab-ci.yml
+README.md
+
+#build
+build/*
+gradle
+
+# Docker
+.dockerignore
+.env*
+compose-files/*
+Dockerfile
+parameters/*

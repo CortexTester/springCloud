@@ -1,0 +1,79 @@
+version: "3.9"
+services:
+  registry.service:
+    image: cbx/registry-service
+    ports:
+      - "8761:8761"
+    networks:
+      - currency-network
+
+  gateway.service:
+    image: cbx/gateway-service
+    ports:
+      - "8765:8765"
+    networks:
+      - currency-network
+    depends_on:
+      - registry.service
+      - rabbitmq
+    environment:
+      - EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE=http://registry.service:8761/eureka
+      - SPRING.ZIPKIN.BASE-URL=http://zipkin.service:9411/
+      - RABBIT_URI=amqp://guest:guest@rabbitmq:5672
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPITNG_ZIPKIN_SENDER_TYPE=rabbit
+
+  currency.exchange.service:
+    image: cbx/currency-exchange
+    ports:
+      - "8001:8001"
+    networks:
+      - currency-network
+    depends_on:
+      - registry.service
+      - rabbitmq
+    environment:
+      - EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE=http://registry.service:8761/eureka
+      - SPRING.ZIPKIN.BASE-URL=http://zipkin.service:9411/
+      - RABBIT_URI=amqp://guest:guest@rabbitmq:5672
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPITNG_ZIPKIN_SENDER_TYPE=rabbit
+
+  currency.conversion.service:
+    image: cbx/currency-conversion
+    ports:
+      - "8100:8100"
+    networks:
+      - currency-network
+    depends_on:
+      - currency.exchange.service
+      - rabbitmq
+    environment:
+      - EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE=http://registry.service:8761/eureka
+      - SPRING.ZIPKIN.BASE-URL=http://zipkin.service:9411/
+      - RABBIT_URI=amqp://guest:guest@rabbitmq:5672
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPITNG_ZIPKIN_SENDER_TYPE=rabbit
+
+
+  zipkin.service:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    depends_on:
+      - rabbitmq
+    networks:
+      - currency-network
+    environment:
+      - RABBIT_URI=amqp://guest:guest@rabbitmq:5672
+
+  rabbitmq:
+    image: rabbitmq:3.5.3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - currency-network
+
+networks:
+  currency-network:
